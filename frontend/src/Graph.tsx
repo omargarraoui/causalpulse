@@ -82,6 +82,8 @@ function buildStyle(
   focused: number | null,
   crossDomain: boolean,
 ): cytoscape.StylesheetCSS[] {
+  // function-form style values are accepted at runtime but the @types
+  // surface only the static-shape variant, so the cast goes through unknown.
   const byId = new Map(data.nodes.map((n) => [n.id, n]));
   const nodeFill = (el: cytoscape.NodeSingular) => {
     const node = el.data("node") as GraphNode;
@@ -126,7 +128,7 @@ function buildStyle(
         "curve-style": "haystack",
       },
     },
-  ] as cytoscape.StylesheetCSS[];
+  ] as unknown as cytoscape.StylesheetCSS[];
 }
 
 function edgeColor(
