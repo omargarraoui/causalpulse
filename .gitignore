@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+
+frontend/node_modules/
+frontend/dist/
+frontend/public/data.json
+
+data/raw/
+data/embeddings.npz
