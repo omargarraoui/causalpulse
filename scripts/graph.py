@@ -16,8 +16,8 @@ from datetime import datetime, timezone
 
 import numpy as np
 
-TOP_K_PER_NODE = 15
-COMBINED_THRESHOLD = 0.25
+TOP_K_PER_NODE = 6
+COMBINED_THRESHOLD = 0.55
 TEMPORAL_SCALE_HOURS = 36.0
 
 

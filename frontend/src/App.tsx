@@ -9,7 +9,7 @@ const DATA_URL = `${import.meta.env.BASE_URL}data.json`;
 
 export function App() {
   const [data, setData] = useState<GraphData | null>(null);
-  const [viewMode, setViewMode] = useState<ViewMode>("topic");
+  const [viewMode, setViewMode] = useState<ViewMode>("source");
   const [focusedSource, setFocusedSource] = useState<number | null>(null);
   const [crossDomain, setCrossDomain] = useState(false);
   const [selected, setSelected] = useState<GraphNode | null>(null);
