@@ -21,9 +21,9 @@ export function App() {
   const [dismissedMobileWarning, setDismissedMobileWarning] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => window.innerWidth <= 768;
+    const checkMobile = () => globalThis.window.innerWidth <= 768;
     setIsMobile(checkMobile());
-    window.addEventListener("resize", () => setIsMobile(checkMobile()));
+    globalThis.window.addEventListener("resize", () => setIsMobile(checkMobile()));
   }, []);
 
   useEffect(() => {
