@@ -81,7 +81,7 @@ function buildStyle(
   viewMode: ViewMode,
   focused: number | null,
   crossDomain: boolean,
-): cytoscape.Stylesheet[] {
+): cytoscape.StylesheetCSS[] {
   const byId = new Map(data.nodes.map((n) => [n.id, n]));
   const nodeFill = (el: cytoscape.NodeSingular) => {
     const node = el.data("node") as GraphNode;
@@ -126,7 +126,7 @@ function buildStyle(
         "curve-style": "haystack",
       },
     },
-  ] as cytoscape.Stylesheet[];
+  ] as cytoscape.StylesheetCSS[];
 }
 
 function edgeColor(
