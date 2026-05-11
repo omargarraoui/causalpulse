@@ -3,6 +3,7 @@ import { Controls } from "./Controls";
 import { DetailPanel } from "./DetailPanel";
 import { Graph } from "./Graph";
 import { InfoModal } from "./InfoModal";
+import { MobileWarning } from "./MobileWarning";
 import { TimeSlider } from "./TimeSlider";
 import type { GraphData, GraphNode, ViewMode } from "./types";
 
@@ -16,6 +17,14 @@ export function App() {
   const [selected, setSelected] = useState<GraphNode | null>(null);
   const [window, setWindow] = useState<[number, number]>([0, 1]);
   const [infoOpen, setInfoOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [dismissedMobileWarning, setDismissedMobileWarning] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => window.innerWidth <= 768;
+    setIsMobile(checkMobile());
+    window.addEventListener("resize", () => setIsMobile(checkMobile()));
+  }, []);
 
   useEffect(() => {
     fetch(DATA_URL).then((r) => r.json()).then(setData);
@@ -98,6 +107,9 @@ export function App() {
       </footer>
 
       <InfoModal open={infoOpen} onClose={() => setInfoOpen(false)} />
+      {isMobile && !dismissedMobileWarning && (
+        <MobileWarning onDismiss={() => setDismissedMobileWarning(true)} />
+      )}
     </div>
   );
 }
