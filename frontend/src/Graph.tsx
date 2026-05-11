@@ -74,16 +74,15 @@ export function Graph({ data, viewMode, focusedSource, crossDomain, onSelect }: 
   return <div ref={container} className="graph-canvas" />;
 }
 
-// cytoscape's TS types don't capture function-form style values cleanly, so
-// the style array is typed loosely. The runtime contract is what matters.
+// cytoscape's TS types model static-shape stylesheets but cytoscape happily
+// accepts function-form values at runtime — the union types in @types/cytoscape
+// don't capture this, so the return is typed loosely on purpose.
 function buildStyle(
   data: GraphData,
   viewMode: ViewMode,
   focused: number | null,
   crossDomain: boolean,
-): cytoscape.StylesheetCSS[] {
-  // function-form style values are accepted at runtime but the @types
-  // surface only the static-shape variant, so the cast goes through unknown.
+): any[] {
   const byId = new Map(data.nodes.map((n) => [n.id, n]));
   const nodeFill = (el: cytoscape.NodeSingular) => {
     const node = el.data("node") as GraphNode;
@@ -128,7 +127,7 @@ function buildStyle(
         "curve-style": "haystack",
       },
     },
-  ] as unknown as cytoscape.StylesheetCSS[];
+  ];
 }
 
 function edgeColor(
