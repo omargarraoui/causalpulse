@@ -13,7 +13,7 @@ export function App() {
   const [data, setData] = useState<GraphData | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>("source");
   const [focusedSource, setFocusedSource] = useState<number | null>(null);
-  const [crossDomain, setCrossDomain] = useState(false);
+  const [crossDomain, setCrossDomain] = useState(true);
   const [selected, setSelected] = useState<GraphNode | null>(null);
   const [window, setWindow] = useState<[number, number]>([0, 1]);
   const [infoOpen, setInfoOpen] = useState(false);
