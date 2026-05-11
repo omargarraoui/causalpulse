@@ -43,20 +43,36 @@ export function Graph({ data, viewMode, focusedSource, crossDomain, onSelect }: 
         name: "fcose",
         animate: false,
         randomize: true,
-        nodeRepulsion: 8000,
-        idealEdgeLength: 110,
-        edgeElasticity: 0.45,
-        gravity: 0.15,
-        numIter: 1500,
+        nodeRepulsion: 25000,
+        idealEdgeLength: 180,
+        edgeElasticity: 0.2,
+        gravity: 0.05,
+        gravityRange: 1.5,
+        numIter: 2500,
+        nodeSeparation: 120,
         tile: false,
       } as cytoscape.LayoutOptions,
-      minZoom: 0.2,
-      maxZoom: 3,
-      wheelSensitivity: 0.18,
+      minZoom: 0.15,
+      maxZoom: 4,
+      wheelSensitivity: 0.25,
     });
 
     instance.on("tap", "node", (event) => {
       onSelect(event.target.data("node"));
+    });
+
+    // Hover surface keeps the canvas calm by default and reveals one
+    // label/edge bundle at a time. Hairballs are unreadable; controlled
+    // reveal is.
+    instance.on("mouseover", "node", (event: cytoscape.EventObject) => {
+      event.target.addClass("hover");
+      event.target.connectedEdges().addClass("hover-edge");
+      event.target.neighborhood("node").addClass("hover-neighbor");
+    });
+    instance.on("mouseout", "node", (event: cytoscape.EventObject) => {
+      event.target.removeClass("hover");
+      event.target.connectedEdges().removeClass("hover-edge");
+      event.target.neighborhood("node").removeClass("hover-neighbor");
     });
 
     cy.current = instance;
@@ -103,19 +119,31 @@ function buildStyle(
         width: nodeSize,
         height: nodeSize,
         "border-width": 0,
-        label: "data(label)",
-        color: "#cfd0dc",
-        "font-size": 8,
+        label: "",
+        color: "#e6e7f0",
+        "font-size": 10,
         "font-family": "Inter, sans-serif",
         "text-valign": "bottom",
-        "text-margin-y": 4,
-        "text-max-width": 110,
+        "text-margin-y": 6,
+        "text-max-width": 180,
         "text-wrap": "ellipsis",
+        "text-background-color": "#0c0d12",
+        "text-background-opacity": 0.85,
+        "text-background-padding": 3,
+        "text-background-shape": "round-rectangle",
         opacity: nodeOpacity,
       },
     },
     {
+      selector: "node.hover, node.hover-neighbor, node:selected",
+      style: { label: "data(label)" },
+    },
+    {
       selector: "node:selected",
+      style: { "border-width": 2, "border-color": "#ffffff" },
+    },
+    {
+      selector: "node.hover",
       style: { "border-width": 2, "border-color": "#ffffff" },
     },
     {
@@ -125,6 +153,13 @@ function buildStyle(
         "line-color": (el: cytoscape.EdgeSingular) => edgeColor(el.data("edge"), byId, crossDomain, viewMode),
         opacity: (el: cytoscape.EdgeSingular) => edgeOpacity(el.data("edge"), byId, viewMode, focused),
         "curve-style": "haystack",
+      },
+    },
+    {
+      selector: "edge.hover-edge",
+      style: {
+        width: (el: cytoscape.EdgeSingular) => 1.2 + 4 * (el.data("edge").weight as number),
+        opacity: 0.95,
       },
     },
   ];
@@ -140,11 +175,11 @@ function edgeColor(
     const a = byId.get(edge.source)!;
     const b = byId.get(edge.target)!;
     if (a.category !== b.category && edge.source_cosine > 0.55) {
-      return "#ffce4f";
+      const base = viewMode === "source" ? "#5a4f9f" : "#3a4055";
+      return shade(base, edge.weight);
     }
   }
-  const base = viewMode === "source" ? "#5a4f9f" : "#3a4055";
-  return shade(base, edge.weight);
+  return "#ffce4f";
 }
 
 function edgeOpacity(
