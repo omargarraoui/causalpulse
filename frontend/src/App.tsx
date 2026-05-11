@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Controls } from "./Controls";
 import { DetailPanel } from "./DetailPanel";
 import { Graph } from "./Graph";
+import { InfoModal } from "./InfoModal";
 import { TimeSlider } from "./TimeSlider";
 import type { GraphData, GraphNode, ViewMode } from "./types";
 
@@ -14,6 +15,7 @@ export function App() {
   const [crossDomain, setCrossDomain] = useState(false);
   const [selected, setSelected] = useState<GraphNode | null>(null);
   const [window, setWindow] = useState<[number, number]>([0, 1]);
+  const [infoOpen, setInfoOpen] = useState(false);
 
   useEffect(() => {
     fetch(DATA_URL).then((r) => r.json()).then(setData);
@@ -59,6 +61,9 @@ export function App() {
             {data.n_articles} articles · {data.n_sources} latent forces · updated {timeAgo(data.generated_at)}
           </span>
         </div>
+        <button className="info-button" onClick={() => setInfoOpen(true)} title="About CausalPulse">
+          ℹ
+        </button>
         <Controls
           viewMode={viewMode}
           setViewMode={setViewMode}
@@ -91,6 +96,8 @@ export function App() {
           visibleCount={filtered.nodes.length}
         />
       </footer>
+
+      <InfoModal open={infoOpen} onClose={() => setInfoOpen(false)} />
     </div>
   );
 }

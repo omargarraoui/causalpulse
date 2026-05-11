@@ -76,6 +76,25 @@ a:hover { color: var(--accent); }
   font-family: "JetBrains Mono", monospace;
 }
 
+.info-button {
+  background: transparent;
+  border: 1px solid var(--border-bright);
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 120ms ease, background 120ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.info-button:hover {
+  color: var(--text);
+  background: var(--bg-elevated);
+}
+
 /* ───────── controls ───────── */
 .controls {
   display: flex;
@@ -323,4 +342,90 @@ a:hover { color: var(--accent); }
   background: var(--accent);
   border: 2px solid var(--bg-base);
   cursor: grab;
+}
+
+/* ───────── info modal ───────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-bright);
+  border-radius: 12px;
+  padding: 32px 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+.modal-close:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.modal-body {
+  padding-right: 24px;
+}
+.modal-body h2 {
+  margin: 0 0 16px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.modal-body p {
+  margin: 0 0 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.modal-body p:last-of-type {
+  margin-bottom: 20px;
+}
+.modal-body strong {
+  color: var(--accent-warm);
+  font-weight: 600;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.modal-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-family: "JetBrains Mono", monospace;
+}
+.modal-footer a:hover {
+  text-decoration: underline;
 }
