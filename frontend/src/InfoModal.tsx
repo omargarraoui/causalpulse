@@ -15,7 +15,7 @@ export function InfoModal({ open, onClose }: InfoModalProps) {
           <h2>About CausalPulse</h2>
 
           <p>
-            The global news stream is a mixed signal — thousands of events from disconnected domains colliding in real time.
+            The global news stream is a mixed signal, thousands of events from disconnected domains colliding in real time.
             CausalPulse treats it as a blind source separation problem: beneath the surface of observable articles lie a small
             number of latent forces (geopolitical tension, economic cycles, social dynamics) that generate what we read. The
             system learns to decompose this mixture, tracing how a single latent force propagates across domains that appear
@@ -24,7 +24,7 @@ export function InfoModal({ open, onClose }: InfoModalProps) {
 
           <p>
             The approach is directly inspired by <strong>StrADiff</strong>, a structured source-wise diffusion framework for
-            signal separation. Here, each article receives an activation vector over K latent forces — not topic labels assigned
+            signal separation. Here, each article receives an activation vector over K latent forces, not topic labels assigned
             by an editor, but emergent dimensions learned from the structure of the data itself. Edges in the graph carry weight
             not just from semantic similarity, but from shared latent force signatures, revealing cross-domain connections a
             keyword search would never surface.
